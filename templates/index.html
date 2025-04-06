@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+        
+        .task-container {
+            width: 300px;
+            background: #333;
+            padding: 110px;
+            border-radius: 10px;
+            color: white;
+            position: relative;
+            transition: left 0.3s ease-in-out; /* Smooth sliding transition */
+        }
+        
+        .task-container h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .task {
+            background: #444;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .task input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        
+        .task span {
+            flex-grow: 1;
+        }
+        
+        .add-task {
+            width: 100%;
+            padding: 10px;
+            background: #555;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .add-task:hover {
+            background: #666;
+        }
+        
+        .task-input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        #task-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .div-2 textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            resize: vertical; /* Allows resizing vertically only */
+            margin-top: 20px;
+            background-color: #444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="task-container">
+        <h2>My Day<br><small>Wednesday 2 April</small></h2>
+        <div id="task-list"></div>
+        <input type="text" id="new-task" class="task-input" placeholder="Enter new task">
+        <button class="add-task" onclick="addTask()">+ Add a task</button>
+    </div>
+    <div class="div-2">
+        <textarea id="note-area" rows="10" cols="30" placeholder="Write your notes here..."></textarea>
+    </div>
+    <script>
+        function addTask() {
+            let input = document.getElementById("new-task");
+            if (input.style.display === "none" || input.style.display === "") {
+                input.style.display = "block";
+                input.focus();
+            } else {
+                let taskText = input.value.trim();
+                if (taskText !== "") {
+                    let taskList = document.getElementById("task-list");
+                    let newTask = document.createElement("div");
+                    newTask.classList.add("task");
+                    newTask.innerHTML = `<input type='checkbox'><span>${taskText}</span>`;
+                    
+                    // Add event listener to remove task when checkbox is checked
+                    newTask.querySelector("input[type='checkbox']").addEventListener("change", function() {
+                        if (this.checked) {
+                            taskList.removeChild(newTask);
+                        }
+                    });
+                    taskList.appendChild(newTask);
+                    input.value = "";
+                }
+                input.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
