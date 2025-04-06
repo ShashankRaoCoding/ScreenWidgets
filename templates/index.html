@@ -94,7 +94,7 @@
 </head>
 <body>
     <div class="task-container">
-        <h2>My Day<br><small>Wednesday 2 April</small></h2>
+<h2 id="date-heading">My Day<br><small>Wednesday 2 April</small></h2>
         <div id="task-list"></div>
         <input type="text" id="new-task" class="task-input" placeholder="Enter new task">
         <button class="add-task" onclick="addTask()">+ Add a task</button>
@@ -103,6 +103,19 @@
         <textarea id="note-area" rows="10" cols="30" placeholder="Write your notes here..."></textarea>
     </div>
     <script>
+// Set today's day and date
+function updateDateHeading() {
+    const dateHeading = document.getElementById("date-heading");
+    const now = new Date();
+
+    const options = { weekday: 'long', day: 'numeric', month: 'long' }; // e.g., "Sunday 6 April"
+    const formattedDate = now.toLocaleDateString('en-GB', options);
+
+    dateHeading.innerHTML = `My Day<br><small>${formattedDate}</small>`;
+}
+
+updateDateHeading();
+
         function addTask() {
             let input = document.getElementById("new-task");
             if (input.style.display === "none" || input.style.display === "") {
